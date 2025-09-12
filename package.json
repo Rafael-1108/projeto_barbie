@@ -1,0 +1,27 @@
+{
+  "name": "projeto_barbie",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cls & nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rafael-1108/projeto_barbie.git"
+  },
+  "keywords": [],
+  "author": "Rafael",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rafael-1108/projeto_barbie/issues"
+  },
+  "homepage": "https://github.com/Rafael-1108/projeto_barbie#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
