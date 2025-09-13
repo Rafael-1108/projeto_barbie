@@ -1,80 +1,87 @@
 import dados from "../models/dados.js";
 
 const { barbies } = dados;
-
 let resultado = barbies;
 
 const getAllBarbies = (req, res) => {
     res.status(200).json({
-        total: resultado.length,
-        barbies: resultado
-    })
-};
+    total: resultado.length,
+    barbies: resultado
+    });
+}
 
 const getBarbieById = (req, res) => {
     const id = parseInt(req.params.id);
 
-    const barbie = barbies.find(b => b.id === id);
+    const barbie = barbies.find(b => b.id === parseInt (id));
+
+    if(!barbie){
+        return res.status(404).json({
+            success: false,
+            message: "Barbie não existe"
+        })
+    }
 
     res.status(200).json({
-        total: barbies.length,
-        barbie: barbie
+    total: 1,
+    barbie: barbie
     })
 }
 
 const createBarbie = (req, res) => {
-    const { id, nome, profissao, anoLancamento } = req.body;
+    const { nome, profissao, anoLancamento } = req.body;
 
-    if (!nome) {
+    if(!nome || !profissao){
         return res.status(400).json({
-            sucess: false,
-            message: "Nome é obrigatório"
+            success: false,
+            message: "nome e profissão são obrigatórios para uma barbie"
         });
     }
 
     const novaBarbie = {
         id: barbies.length + 1,
         nome: nome,
-        anoLancamento: anoLancamento,
-        profissao: profissao
+        profissao: profissao,
+        anoLancamento: parseInt(anoLancamento)
     }
 
     barbies.push(novaBarbie);
 
-    res.status(201).json ({
-        sucess: true,
-        message: "Barbie cadastrada",
-        barbie: novaBarbie
+    res.status(201).json({
+    success: true,
+    message: "Nova barbie criada",
+    barbie: novaBarbie
     })
 }
 
-const deleteBarbie = (req, res) => {
+const deleteBarbie = (req,res) => {
     const id = parseInt(req.params.id);
 
-    if (isNaN(id)) {
+    if(isNaN(id)){
         return res.status(400).json({
-            sucess: false,
-            message: "O ID deve ser válido"
+            success: false,
+            message: "O id deve ser válido"
         })
     }
 
-    const barbieParaRemover = barbies.find(b => b.id === id);
+    const barbieRemover = barbies.find(b => b.id === id);
 
-    if (!barbieParaRemover) {
-        return res.status(404).json ({
+    if(!barbieRemover) {
+        return res.status(404).json({
             sucess: false,
-            message: `Nenhuma barbie com o id: ${id} encontrada`
-        });
+            message: `Barbie com o id ${id} não existe`
+        })
     }
 
-    const barbiesFiltradas = barbies.filter(barbie => barbie.id !== id);
+    const barbiesFiltrados = barbies.filter(barbie => barbie.id !== id);
 
-    barbies.splice(0, barbies.length, ...barbiesFiltradas);
+    barbies.splice(0, barbies.length, ...barbiesFiltrados);
 
     res.status(200).json({
-        sucess: true,
-        message: `A barbie ${id} foi removida com sucesso`
+        success: true,
+        message: `a barbie ${id} foi removido com sucesso`
     })
-} 
+
+}
 
 export { getAllBarbies, getBarbieById, createBarbie, deleteBarbie };
