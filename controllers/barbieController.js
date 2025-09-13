@@ -1,6 +1,6 @@
 import dados from "../models/dados.js";
 
-const { barbies } = dados.js;
+const { barbies } = dados;
 
 let resultado = barbies;
 
@@ -39,7 +39,7 @@ const createBarbie = (req, res) => {
         profissao: profissao
     }
 
-    princesas.push(novaPrincesa);
+    barbies.push(novaBarbie);
 
     res.status(201).json ({
         sucess: true,
@@ -69,7 +69,7 @@ const deleteBarbie = (req, res) => {
 
     const barbiesFiltradas = barbies.filter(barbie => barbie.id !== id);
 
-    barbies.splice(0, barbies.length, ...bruxosFiltrados);
+    barbies.splice(0, barbies.length, ...barbiesFiltradas);
 
     res.status(200).json({
         sucess: true,
